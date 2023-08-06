@@ -1,0 +1,19 @@
+databases:
+  - name: rails-tutorial-sampleapp-db
+    databaseName: rails_tutorial_sampleapp_db_en4g
+    user: rails_tutorial_sampleapp_db_en4g_user
+    region: singapore
+
+services:
+  - type: web
+    name: rails-tutorial-sampleapp
+    runtime: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rails_tutorial_sampleapp_db_en4g
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
